@@ -4,15 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Kazama Stealth Pro</title>
+  <!-- Telegram Web App SDK (Zaroori hai) -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
   <style>
     body { background-color: #070b13; color: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
     .glass { background: linear-gradient(145deg, rgba(17, 24, 39, 0.9) 0%, rgba(10, 15, 26, 0.95) 100%); border: 1px solid rgba(56, 189, 248, 0.15); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); }
-    .neon-glow { box-shadow: 0 0 15px rgba(6, 182, 212, 0.25); }
     .tab-btn.active { color: #38bdf8; border-bottom: 2px solid #38bdf8; }
     .page { display: none; }
     .page.active { display: block; }
+    .nav-btn.active { color: #38bdf8; }
   </style>
 </head>
 <body class="p-3 pb-24 select-none max-w-md mx-auto">
@@ -29,9 +31,8 @@
     <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">● Online</span>
   </div>
 
-  <!-- SCREEN 1 & 2: DASHBOARD / OVERVIEW -->
+  <!-- SCREEN 1 & 2: DASHBOARD -->
   <div id="page-dashboard" class="page active space-y-3">
-    <!-- Live Stats Grid -->
     <div class="grid grid-cols-4 gap-2">
       <div class="glass rounded-xl p-2 text-center">
         <div class="text-[9px] text-slate-400 uppercase font-semibold">Groups</div>
@@ -55,7 +56,6 @@
       </div>
     </div>
 
-    <!-- Engine Status Card -->
     <div class="glass rounded-2xl p-3.5 space-y-2.5">
       <div class="flex items-center justify-between">
         <span class="text-xs font-bold text-slate-200">System Engine</span>
@@ -74,21 +74,20 @@
       </div>
     </div>
 
-    <!-- Quick Navigation Links -->
     <div class="space-y-1.5 text-xs">
-      <button onclick="showPage('groups')" class="w-full glass p-3 rounded-xl flex items-center justify-between text-left hover:border-cyan-500/40">
+      <button onclick="navTo('groups')" class="w-full glass p-3 rounded-xl flex items-center justify-between text-left hover:border-cyan-500/40">
         <span class="flex items-center gap-2"><i class="fa-solid fa-users text-cyan-400"></i> Groups Management</span>
         <span class="text-slate-500">12 Groups ❯</span>
       </button>
-      <button onclick="showPage('messages')" class="w-full glass p-3 rounded-xl flex items-center justify-between text-left hover:border-cyan-500/40">
+      <button onclick="navTo('messages')" class="w-full glass p-3 rounded-xl flex items-center justify-between text-left hover:border-cyan-500/40">
         <span class="flex items-center gap-2"><i class="fa-solid fa-comment-dots text-purple-400"></i> Message Pool & Templates</span>
         <span class="text-slate-500">43 Templates ❯</span>
       </button>
-      <button onclick="showPage('scheduler')" class="w-full glass p-3 rounded-xl flex items-center justify-between text-left hover:border-cyan-500/40">
+      <button onclick="navTo('scheduler')" class="w-full glass p-3 rounded-xl flex items-center justify-between text-left hover:border-cyan-500/40">
         <span class="flex items-center gap-2"><i class="fa-solid fa-clock text-amber-400"></i> Broadcast Scheduler</span>
         <span class="text-slate-500">3 Active ❯</span>
       </button>
-      <button onclick="showPage('workers')" class="w-full glass p-3 rounded-xl flex items-center justify-between text-left hover:border-cyan-500/40">
+      <button onclick="navTo('workers')" class="w-full glass p-3 rounded-xl flex items-center justify-between text-left hover:border-cyan-500/40">
         <span class="flex items-center gap-2"><i class="fa-solid fa-network-wired text-indigo-400"></i> Worker Accounts Fleet</span>
         <span class="text-slate-500">5 Online ❯</span>
       </button>
@@ -99,13 +98,7 @@
   <div id="page-groups" class="page space-y-3">
     <div class="flex items-center justify-between">
       <h2 class="text-sm font-bold text-slate-200">12 Authorized Groups</h2>
-      <button class="px-2.5 py-1 bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 rounded-lg text-xs font-semibold">+ Add Group</button>
-    </div>
-    <div class="flex gap-2 border-b border-slate-800 text-xs pb-1">
-      <span class="tab-btn active px-2 py-1 cursor-pointer">All (12)</span>
-      <span class="tab-btn px-2 py-1 text-slate-400 cursor-pointer">Active (10)</span>
-      <span class="tab-btn px-2 py-1 text-slate-400 cursor-pointer">Paused (1)</span>
-      <span class="tab-btn px-2 py-1 text-slate-400 cursor-pointer">Error (1)</span>
+      <button onclick="alert('Group add karne ke liye bot me /add_group bhejein')" class="px-2.5 py-1 bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 rounded-lg text-xs font-semibold">+ Add Group</button>
     </div>
     <div class="space-y-2 text-xs">
       <div class="glass p-3 rounded-xl flex items-center justify-between">
@@ -132,11 +125,11 @@
     </div>
   </div>
 
-  <!-- SCREEN 5 & 6: MESSAGES LIBRARY & SPINTAX -->
+  <!-- SCREEN 5 & 6: MESSAGES -->
   <div id="page-messages" class="page space-y-3">
     <div class="flex items-center justify-between">
       <h2 class="text-sm font-bold text-slate-200">Message Templates</h2>
-      <button class="px-2.5 py-1 bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 rounded-lg text-xs font-semibold">+ Add Message</button>
+      <button onclick="alert('Text add karne ke liye bot me /add_msg bhejein')" class="px-2.5 py-1 bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 rounded-lg text-xs font-semibold">+ Add Message</button>
     </div>
     <div class="glass p-3 rounded-xl space-y-2">
       <div class="flex justify-between items-center text-xs">
@@ -148,7 +141,6 @@
       </div>
       <div class="flex justify-between items-center text-[10px] text-slate-400 pt-1">
         <span>Target: All Groups</span>
-        <button class="text-cyan-400">Edit Template ❯</button>
       </div>
     </div>
   </div>
@@ -167,21 +159,14 @@
         </div>
         <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">Active</span>
       </div>
-      <div class="flex justify-between items-center pt-2 border-t border-slate-800">
-        <div>
-          <div class="font-bold text-white">Weekend Promo Broadcast</div>
-          <div class="text-[10px] text-slate-400">Sat, Sun • 18:00 PM</div>
-        </div>
-        <span class="px-2 py-0.5 rounded text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/30">Paused</span>
-      </div>
     </div>
   </div>
 
-  <!-- SCREEN 8: WORKERS FLEET MATRIX -->
+  <!-- SCREEN 8: WORKERS FLEET -->
   <div id="page-workers" class="page space-y-3">
     <div class="flex items-center justify-between">
       <h2 class="text-sm font-bold text-slate-200">Worker Fleet (5)</h2>
-      <button onclick="showPage('addworker')" class="px-2.5 py-1 bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 rounded-lg text-xs font-semibold">+ Add Worker</button>
+      <button onclick="alert('Worker add karne ke liye bot me /login +91xxxx bhejein')" class="px-2.5 py-1 bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 rounded-lg text-xs font-semibold">+ Add Worker</button>
     </div>
     <div class="space-y-2 text-xs">
       <div class="glass p-3 rounded-xl flex items-center justify-between">
@@ -198,91 +183,61 @@
         </div>
         <span class="font-bold text-amber-400">Cooldn</span>
       </div>
-      <div class="glass p-3 rounded-xl flex items-center justify-between">
-        <div>
-          <div class="font-bold text-white">+91 7654321098</div>
-          <div class="text-[10px] text-emerald-400">● Online • Sent: 38</div>
-        </div>
-        <span class="font-bold text-emerald-400">94% Health</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- SCREEN 9: ACTIVITY LOG -->
-  <div id="page-logs" class="page space-y-2 text-xs">
-    <h2 class="text-sm font-bold text-slate-200 mb-2">Live Activity Log</h2>
-    <div class="glass p-2.5 rounded-lg flex justify-between items-center">
-      <span class="text-slate-300">[21:45] Message sent to 3 groups</span>
-      <span class="text-[10px] text-emerald-400 font-bold">SUCCESS</span>
-    </div>
-    <div class="glass p-2.5 rounded-lg flex justify-between items-center">
-      <span class="text-slate-300">[21:32] Target group updated</span>
-      <span class="text-[10px] text-cyan-400 font-bold">INFO</span>
-    </div>
-    <div class="glass p-2.5 rounded-lg flex justify-between items-center">
-      <span class="text-slate-300">[21:15] Worker 2 flood wait (18s)</span>
-      <span class="text-[10px] text-amber-400 font-bold">WAIT</span>
-    </div>
-  </div>
-
-  <!-- SCREEN 10: SETTINGS -->
-  <div id="page-settings" class="page space-y-3 text-xs">
-    <h2 class="text-sm font-bold text-slate-200">Engine Settings</h2>
-    <div class="glass p-3 rounded-xl space-y-3">
-      <div class="flex justify-between items-center">
-        <span>Auto-Delete After Send</span>
-        <input type="checkbox" checked class="accent-cyan-500 w-4 h-4">
-      </div>
-      <div class="flex justify-between items-center">
-        <span>Message Rotation (Random)</span>
-        <input type="checkbox" checked class="accent-cyan-500 w-4 h-4">
-      </div>
-      <div class="flex justify-between items-center">
-        <span>High Shield Anti-Flood</span>
-        <input type="checkbox" checked class="accent-cyan-500 w-4 h-4">
-      </div>
-    </div>
-  </div>
-
-  <!-- SCREEN 11 & 12: ADD WORKER & COMPLETE WIZARD -->
-  <div id="page-addworker" class="page space-y-3">
-    <h2 class="text-sm font-bold text-slate-200">Connect Worker Wizard</h2>
-    <div class="glass p-4 rounded-xl space-y-3 text-xs">
-      <div class="text-[11px] text-slate-400">Step 1: Enter Phone Number</div>
-      <input type="text" placeholder="+919876543210" class="w-full bg-slate-900 border border-slate-700 p-2.5 rounded-lg text-white">
-      <button class="w-full py-2.5 bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-bold rounded-lg">Send OTP Code</button>
     </div>
   </div>
 
   <!-- BOTTOM NAVBAR -->
   <div class="fixed bottom-0 left-0 right-0 glass border-t border-slate-800/80 px-4 py-2 flex justify-between items-center max-w-md mx-auto z-50">
-    <button onclick="showPage('dashboard')" class="flex flex-col items-center gap-0.5 text-cyan-400">
+    <button onclick="navTo('dashboard')" id="btn-dashboard" class="nav-btn active flex flex-col items-center gap-0.5">
       <i class="fa-solid fa-chart-pie text-sm"></i>
       <span class="text-[9px]">Dashboard</span>
     </button>
-    <button onclick="showPage('groups')" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-white">
+    <button onclick="navTo('groups')" id="btn-groups" class="nav-btn flex flex-col items-center gap-0.5 text-slate-400">
       <i class="fa-solid fa-users text-sm"></i>
       <span class="text-[9px]">Groups</span>
     </button>
-    <button onclick="showPage('messages')" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-white">
+    <button onclick="navTo('messages')" id="btn-messages" class="nav-btn flex flex-col items-center gap-0.5 text-slate-400">
       <i class="fa-solid fa-comment-dots text-sm"></i>
       <span class="text-[9px]">Messages</span>
     </button>
-    <button onclick="showPage('scheduler')" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-white">
+    <button onclick="navTo('scheduler')" id="btn-scheduler" class="nav-btn flex flex-col items-center gap-0.5 text-slate-400">
       <i class="fa-solid fa-clock text-sm"></i>
       <span class="text-[9px]">Scheduler</span>
     </button>
-    <button onclick="showPage('workers')" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-white">
+    <button onclick="navTo('workers')" id="btn-workers" class="nav-btn flex flex-col items-center gap-0.5 text-slate-400">
       <i class="fa-solid fa-sliders text-sm"></i>
       <span class="text-[9px]">Fleet</span>
     </button>
   </div>
 
   <script>
-    function showPage(pageId) {
-      document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
-      const target = document.getElementById('page-' + pageId);
-      if (target) target.classList.add('active');
+    // Initialize Telegram WebApp
+    if (window.Telegram && window.Telegram.WebApp) {
+      window.Telegram.WebApp.ready();
+      window.Telegram.WebApp.expand();
+    }
+
+    function navTo(pageId) {
+      // Hide all pages
+      document.querySelectorAll('.page').forEach(function(el) {
+        el.classList.remove('active');
+      });
+      // Show targeted page
+      var target = document.getElementById('page-' + pageId);
+      if (target) {
+        target.classList.add('active');
+      }
+
+      // Update bottom nav colors
+      document.querySelectorAll('.nav-btn').forEach(function(btn) {
+        btn.classList.remove('active', 'text-cyan-400');
+        btn.classList.add('text-slate-400');
+      });
+      var activeBtn = document.getElementById('btn-' + pageId);
+      if (activeBtn) {
+        activeBtn.classList.add('active', 'text-cyan-400');
+        activeBtn.classList.remove('text-slate-400');
+      }
     }
   </script>
 </body>
